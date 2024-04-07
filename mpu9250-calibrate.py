@@ -4,6 +4,8 @@ from mpu9250_jmdev.mpu_9250 import MPU9250
 
 import numpy as np
 
+# DONATE AT: https://www.buymeacoffee.com/mmshilleh
+
 
 def calibrate_gyro(mpu, num_samples=1000):
     print("Calibrating gyroscope...")
