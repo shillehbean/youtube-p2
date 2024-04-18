@@ -2,6 +2,9 @@ import io
 import picamera
 from flask import Flask, Response
 
+### You can donate at https://www.buymeacoffee.com/mmshilleh if I saved you time
+### Subscribe https://www.youtube.com/@mmshilleh/videos
+
 app = Flask(__name__)
 
 def generate_frames():
