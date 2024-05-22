@@ -4,6 +4,9 @@ import { Svg, Path, Circle } from 'react-native-svg';
 
 const { height, width } = Dimensions.get('window');
 
+// You can donate at https://www.buymeacoffee.com/mmshilleh if I saved you time
+// Subscribe https://www.youtube.com/@mmshilleh/videos
+
 export default () => {
   const windowWidth = Dimensions.get('window').width;
   const [polygonVertices, setPolygonVertices] = useState([
