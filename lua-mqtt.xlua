@@ -1,0 +1,66 @@
+-- Define the onstatus callback function
+-- This function handles the status updates of the MQTT connection.
+local function onstatus(type, code, status)
+   print("Status Callback Triggered:", type, code)
+   if type == "mqtt" and code == "connect" then
+      -- Check if the connection was successful
+      if status.reasoncode == 0 then
+         print("Successful new connection")
+         print("Server properties:", ba.json.encode(status.properties))
+         return true -- Accept the connection
+      else
+         print("Connection failed with reason code:", status.reasoncode)
+         return false -- Deny reconnect
+      end
+   elseif type == "mqtt" and code == "disconnect" then
+      -- Handle disconnection
+      print("Disconnected with reason code:", status and status.reasoncode or "unknown")
+   elseif type == "sock" then
+      -- Handle socket errors
+      print("Socket error occurred")
+   else
+      -- Handle unknown errors
+      print("Unknown error occurred")
+   end
+   return false -- Deny reconnect by default
+end
+
+-- Define the onpublish callback function
+-- This function handles incoming messages from the subscribed topics.
+local function onpublish(topic, payload, prop)
+   print("Received:", topic, payload, ba.json.encode(prop))
+end
+
+-- Create the MQTT client instance with TLS and authentication
+-- Replace the placeholder values with your actual credentials and broker information.
+local mqtt = require("mqttc").create(
+   "<>", -- Your broker URL
+   onstatus, 
+   onpublish, 
+   {
+      secure = true,           -- Enable TLS for a secure connection
+      username = "<>", -- Your username
+      password = "<>", -- Your password
+      port = 8883,              -- Default port for secure MQTT connections
+      keepalive = 60,           -- Keep-alive interval in seconds
+      clientidentifier = "my_mqtt_client" -- Unique client ID, can be any string
+   }
+)
+
+print("Subbing")
+
+-- Subscribe to a topic
+-- This subscribes to the topic "mytopic". Replace "mytopic" with your desired topic.
+mqtt:subscribe("mytopic")
+
+-- Publish a message to the topic
+-- This publishes the message "testing" to the topic "mytopic". Replace with your desired topic and message.
+mqtt:publish("mytopic", "testing")
+
+-- Give it some time to process messages
+-- The sleep time can be adjusted as necessary to allow the client to receive messages.
+ba.sleep(5000)
+
+-- Disconnect the MQTT client
+-- This gracefully disconnects the client from the broker.
+mqtt:disconnect(0)
