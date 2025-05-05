@@ -1,0 +1,48 @@
+version: 4
+mqtt:
+  base_topic: zigbee2mqtt
+  server: mqtt://localhost:1883
+serial:
+  port: >-
+    /dev/serial/by-id/usb-Itead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_V2_12890d77b449ef11b348d58cff00cc63-if00-port0
+  adapter: ezsp
+advanced:
+  log_level: info
+  channel: 11
+  network_key:
+    - 127
+    - 74
+    - 176
+    - 94
+    - 200
+    - 83
+    - 150
+    - 238
+    - 7
+    - 216
+    - 105
+    - 61
+    - 86
+    - 92
+    - 114
+    - 9
+  pan_id: 50969
+  ext_pan_id:
+    - 123
+    - 239
+    - 16
+    - 242
+    - 234
+    - 227
+    - 158
+    - 19
+frontend:
+  port: 8080
+  host: 0.0.0.0
+  enabled: true
+homeassistant:
+  enabled: true
+permit_join: true
+devices:
+  '0xb40e060fffe0595b':
+    friendly_name: '0xb40e060fffe0595b'
